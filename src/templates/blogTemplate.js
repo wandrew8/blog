@@ -8,10 +8,10 @@ export default function Template({ data }) {
   const { markdownRemark: post } = data
   console.log(post.frontmatter.authorImage)
   return (
-    <>
+    <PageContainer>
       <Helmet title={`${post.frontmatter.title}`} />
       <Container>
-        <AuthorAside author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/>
+        <AuthorAside authorBio={post.frontmatter.authorBio} author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/>
         <div className="blog-post">
           <h1>{post.frontmatter.title}</h1>
           <div
@@ -20,7 +20,7 @@ export default function Template({ data }) {
           />
         </div>
       </Container>
-    </>
+    </PageContainer>
   )
 }
 
@@ -33,6 +33,7 @@ export const pageQuery = graphql`
         path
         title
         author
+        authorBio
         authorImage {
           childImageSharp {
             fluid(maxWidth: 100) {
@@ -46,9 +47,14 @@ export const pageQuery = graphql`
 `
 
 const Container = styled.div`
-  margin: 0 auto;
-  text-align: center;
+  max-width: 900px;
+  margin: 2rem auto;
+  text-align: left;
   display: grid;
-  grid-template-columns: 1fr 4fr;
-
+  grid-template-columns: 200px 4fr;
+  grid-gap: 2rem;
+  position: relative;
 `
+const PageContainer = styled.div`
+  margin: 6rem;
+`;
