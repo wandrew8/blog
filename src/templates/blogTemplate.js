@@ -1,22 +1,29 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
-// import '../css/blog-post.css';
+import styled from "styled-components"
+import AuthorAside from '../components/authorAside'
+
 export default function Template({ data }) {
   const { markdownRemark: post } = data
+  console.log(post.frontmatter.authorImage)
   return (
-    <div className="blog-post-container">
-      <Helmet title={`Your Blog Name - ${post.frontmatter.title}`} />
-      <div className="blog-post">
-        <h1>{post.frontmatter.title}</h1>
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
-      </div>
-    </div>
+    <>
+      <Helmet title={`${post.frontmatter.title}`} />
+      <Container>
+        <AuthorAside author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/>
+        <div className="blog-post">
+          <h1>{post.frontmatter.title}</h1>
+          <div
+            className="blog-post-content"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+        </div>
+      </Container>
+    </>
   )
 }
+
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
@@ -25,7 +32,23 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         path
         title
+        author
+        authorImage {
+          childImageSharp {
+            fluid(maxWidth: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
+`
+
+const Container = styled.div`
+  margin: 0 auto;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+
 `
