@@ -12,7 +12,7 @@ export default function Template({ data }) {
     <PageContainer>
       <Helmet title={`${post.frontmatter.title}`} />
       <Container>
-        {isPageWide && <AuthorAside mobile={isPageWide} authorBio={post.frontmatter.authorBio} author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/> }
+        <AuthorAside mobile={isPageWide} authorBio={post.frontmatter.authorBio} author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/> 
         <div className="blog-post">
           <h1>{post.frontmatter.title}</h1>
           <div
