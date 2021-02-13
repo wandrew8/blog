@@ -5,6 +5,7 @@ title: "Closures in JavaScript"
 author: "Andrew Weiss"
 authorBio: "Software engineering manager NY Times, dad, husband, former startup founder, TaeKwonDo black belt, cook, news & tech junkie. Here are some of my mind ramblings."
 authorImage: ../../images/authors/jake.jpg
+featuredImage: ../../images/featured/closure.jpg
 tags: ["JavaScript", "Advanced JS", "Closures"]
 ---
 

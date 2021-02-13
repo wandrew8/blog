@@ -5,6 +5,7 @@ import styled from "styled-components"
 import AuthorAside from '../components/authorAside'
 import { devices } from '../styles/devices'
 import useMediaQuery from '../hooks/mediaQuery'
+
 export default function Template({ data }) {
   const { markdownRemark: post } = data
   let isPageWide = useMediaQuery(devices.tablet);

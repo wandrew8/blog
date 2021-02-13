@@ -26,7 +26,7 @@ const AuthorAside = ({ mobile, author, authorImage, authorBio }) => {
                     <h3>{author}</h3>
                     
                     { isToggled ? <p className="content">{truncate(authorBio, {
-                        'length': 50,
+                        'length': 70,
                         'seperator': " "
                     })}</p> : <p>{authorBio}</p> }
                     <a onClick={setToggle}>{isToggled ? "Read more" : "Read less"}</a>
@@ -83,6 +83,7 @@ const MobileContainer = styled.div`
             object-fit: cover;
             border-radius: 50%;
             margin-right: 2rem;
+            margin-bottom: 1rem;
         }
         h3 {
             padding: 0;

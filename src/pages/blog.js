@@ -1,25 +1,21 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
-import { Helmet } from "react-helmet"
-// import '../css/index.css'; // add some style if you want!
+import { graphql } from "gatsby"
+import BlogCard from '../components/blogCard'
+import { devices } from '../styles/devices'
+import styled from 'styled-components'
+
 export default function Index({ data }) {
   const { edges: posts } = data.allMarkdownRemark
   return (
-    <div className="blog-posts">
+    <Grid>
       {posts
         .filter(post => post.node.frontmatter.title.length > 0)
         .map(({ node: post }) => {
           return (
-            <div className="blog-post-preview" key={post.id}>
-              <h1>
-                <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
-              </h1>
-              <h2>{post.frontmatter.date}</h2>
-              <p>{post.excerpt}</p>
-            </div>
+            <BlogCard key={post.id} post={post}/>
           )
         })}
-    </div>
+    </Grid>
   )
 }
 export const pageQuery = graphql`
@@ -31,11 +27,37 @@ export const pageQuery = graphql`
           id
           frontmatter {
             title
-            date(formatString: "MMMM DD, YYYY")
+            date(formatString: "MMM DD, YYYY")
             path
+            author
+            authorImage {
+              childImageSharp {
+                fluid(maxWidth: 100) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            featuredImage {
+              childImageSharp {
+                fluid(maxWidth: 500) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
           }
         }
       }
     }
   }
 `
+
+const Grid = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    margin: 2rem;
+    justify-content: center;
+    @media ${devices.laptop} { 
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
