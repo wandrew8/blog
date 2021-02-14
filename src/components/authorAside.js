@@ -29,7 +29,8 @@ const AuthorAside = ({ mobile, author, authorImage, authorBio }) => {
                         'length': 70,
                         'seperator': " "
                     })}</p> : <p>{authorBio}</p> }
-                    <a onClick={setToggle}>{isToggled ? "Read more" : "Read less"}</a>
+                    { authorBio ? <a onClick={setToggle}>{isToggled ? "Read more" : "Read less"}</a> : null }
+                    
                 </div>
 
             </div>
@@ -73,25 +74,25 @@ const MobileContainer = styled.div`
     border-bottom: lightgray solid 1px;
     .flex {
         display: grid;
-        grid-template-columns: 75px 1fr;
-        grid-gap: 2rem;
+        grid-template-columns: 35px 1fr;
+        grid-gap: 1rem;
         justify-content: center;
-        
         .image {
-            height: 75px;
-            width: 75px;
+            height: 35px;
+            width: 35px;
             object-fit: cover;
             border-radius: 50%;
-            margin-right: 2rem;
             margin-bottom: 1rem;
         }
         h3 {
             padding: 0;
             margin: 0;
+            font-size: 0.9rem;
         }
         p {
             margin: 10px 0px;
             padding: 0;
+            font-size: 0.8rem;
         }
     }
     a {

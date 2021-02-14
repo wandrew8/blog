@@ -9,7 +9,16 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-remark`,
-    
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [
+          `Poppins`,
+          `Open Sans` // you can also specify font weights and styles
+        ],
+        display: 'swap'
+      }
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

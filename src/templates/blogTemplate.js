@@ -5,24 +5,33 @@ import styled from "styled-components"
 import AuthorAside from '../components/authorAside'
 import { devices } from '../styles/devices'
 import useMediaQuery from '../hooks/mediaQuery'
+import Layout from '../components/layout'
+import Img from "gatsby-image"
+
 
 export default function Template({ data }) {
   const { markdownRemark: post } = data
   let isPageWide = useMediaQuery(devices.tablet);
+  const { title, authorBio, author } = post.frontmatter;
+  const authorImage = post.frontmatter.authorImage.childImageSharp.fluid;
+  const featuredImage = post.frontmatter.featuredImage.childImageSharp.fluid
   return (
-    <PageContainer>
-      <Helmet title={`${post.frontmatter.title}`} />
-      <Container>
-        <AuthorAside mobile={isPageWide} authorBio={post.frontmatter.authorBio} author={post.frontmatter.author} authorImage={post.frontmatter.authorImage.childImageSharp.fluid}/> 
-        <div className="blog-post">
-          <h1>{post.frontmatter.title}</h1>
-          <div
-            className="blog-post-content"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
-        </div>
-      </Container>
-    </PageContainer>
+    <Layout>
+      <PageContainer>
+        <Helmet title={`${title}`} />
+        <Container>
+          <AuthorAside mobile={isPageWide} authorBio={authorBio} author={author} authorImage={authorImage}/> 
+          <div className="blog-post">
+            <h1>{title}</h1>
+            <Img className="image" fluid={featuredImage} alt={title} />
+            <div
+              className="blog-post-content"
+              dangerouslySetInnerHTML={{ __html: post.html }}
+            />
+          </div>
+        </Container>
+      </PageContainer>
+    </Layout>
   )
 }
 
@@ -43,6 +52,13 @@ export const pageQuery = graphql`
             }
           }
         }
+        featuredImage {
+          childImageSharp {
+            fluid(maxWidth: 600) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
@@ -54,8 +70,18 @@ const Container = styled.div`
   text-align: left;
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 2rem;
+  grid-gap: 0rem 2rem;
   position: relative;
+  h1 {
+    font-size: 2rem;
+  }
+  .image {
+    max-width: 664px;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border-radius: 2px;
+  }
   @media ${devices.tablet} { 
     grid-template-columns: 200px 4fr;
   }

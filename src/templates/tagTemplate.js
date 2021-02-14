@@ -1,25 +1,28 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import Layout from '../components/layout'
 
 const TagTemplate = ({ data }) => {
     const blogPosts = data.allMarkdownRemark.edges
     const { totalCount } = data.allMarkdownRemark;
     console.log(blogPosts)
     return (
-        <div>
-            <ul>
-            {blogPosts.map(({ node }) => {
-                const slug = node.frontmatter.path
-                const { title } = node.frontmatter
-                return (
-                <li key={slug}>
-                    <Link to={slug}>{title}</Link>
-                </li>
-                )
-            })}
-            </ul>
-            <Link to="/tags">View all tags</Link>
-        </div>
+        <Layout>
+            <div>
+                <ul>
+                {blogPosts.map(({ node }) => {
+                    const slug = node.frontmatter.path
+                    const { title } = node.frontmatter
+                    return (
+                    <li key={slug}>
+                        <Link to={slug}>{title}</Link>
+                    </li>
+                    )
+                })}
+                </ul>
+                <Link to="/tags">View all tags</Link>
+            </div>
+        </Layout>
     )
 }
 

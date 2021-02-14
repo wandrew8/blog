@@ -3,19 +3,22 @@ import { graphql } from "gatsby"
 import BlogCard from '../components/blogCard'
 import { devices } from '../styles/devices'
 import styled from 'styled-components'
+import Layout from '../components/layout'
 
 export default function Index({ data }) {
   const { edges: posts } = data.allMarkdownRemark
   return (
-    <Grid>
-      {posts
-        .filter(post => post.node.frontmatter.title.length > 0)
-        .map(({ node: post }) => {
-          return (
-            <BlogCard key={post.id} post={post}/>
-          )
-        })}
-    </Grid>
+    <Layout>
+      <Grid>
+        {posts
+          .filter(post => post.node.frontmatter.title.length > 0)
+          .map(({ node: post }) => {
+            return (
+              <BlogCard key={post.id} post={post}/>
+            )
+          })}
+      </Grid>
+    </Layout>
   )
 }
 export const pageQuery = graphql`
@@ -57,7 +60,13 @@ const Grid = styled.div`
     grid-gap: 2rem;
     margin: 2rem;
     justify-content: center;
+    max-width: 1000px;
+    @media ${devices.mobileL} { 
+      margin: 4rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
     @media ${devices.laptop} { 
-    grid-template-columns: repeat(2, 1fr);
-  }
+        margin: 4rem;
+        grid-template-columns: repeat(3, 1fr);
+    }
 `;
