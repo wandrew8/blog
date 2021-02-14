@@ -6,14 +6,14 @@ import { truncate } from 'lodash'
 import useToggle from '../hooks/useToggle'
 
 
-const AuthorAside = ({ mobile, author, authorImage, authorBio }) => {
+const AuthorAside = ({ mobile, author, date, authorImage, authorBio }) => {
     const [isToggled, setToggle] = useToggle(true);
     return (
       <>
         <div></div>
         { mobile && <Container>
             <div>
-            <Img className="image" fluid={authorImage} alt={author}/>
+            <Img className="authorImage" fluid={authorImage} alt={author}/>
             <p className="content">ABOUT</p>
             <h3>{author}</h3>
             <p className="content">{authorBio}</p>
@@ -23,16 +23,16 @@ const AuthorAside = ({ mobile, author, authorImage, authorBio }) => {
             <div className="flex">
                 <Img className="image" fluid={authorImage} alt={author}/>
                 <div>
-                    <h3>{author}</h3>
+                    <h3>{author} · <span className="date">{date}</span></h3>
                     
                     { isToggled ? <p className="content">{truncate(authorBio, {
-                        'length': 70,
+                        'length': 40,
                         'seperator': " "
                     })}</p> : <p>{authorBio}</p> }
-                    { authorBio ? <a onClick={setToggle}>{isToggled ? "Read more" : "Read less"}</a> : null }
-                    
                 </div>
-
+            </div>
+            <div className="button">
+                { authorBio ? <a onClick={setToggle}>{isToggled ? "﹀" : "︿"}</a> : null }
             </div>
         </MobileContainer>}
       </>
@@ -60,7 +60,7 @@ const Container = styled.div`
         padding: 0rem;
         margin: 0;
     }
-    .image {
+    .authorImage {
         width: 100px;
         height: 100px;
         object-fit: cover;
@@ -72,17 +72,17 @@ const Container = styled.div`
 
 const MobileContainer = styled.div`
     border-bottom: lightgray solid 1px;
+    margin-bottom: 1rem;
     .flex {
         display: grid;
-        grid-template-columns: 35px 1fr;
+        grid-template-columns: 45px 1fr;
         grid-gap: 1rem;
         justify-content: center;
         .image {
-            height: 35px;
-            width: 35px;
+            height: 45px;
+            width: 45px;
             object-fit: cover;
             border-radius: 50%;
-            margin-bottom: 1rem;
         }
         h3 {
             padding: 0;
@@ -90,9 +90,9 @@ const MobileContainer = styled.div`
             font-size: 0.9rem;
         }
         p {
-            margin: 10px 0px;
+            margin: 0px 0px;
             padding: 0;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
     }
     a {
@@ -101,6 +101,14 @@ const MobileContainer = styled.div`
         cursor: pointer;
         margin: 0;
         padding: 0;
+        
+    }
+    .button {
+        text-align: center;
+    }
+    .date {
+        color: gray;
+        font-size: 0.7rem;
     }
 `;
 

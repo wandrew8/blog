@@ -2,8 +2,10 @@
 path: "/blog/recursion"
 date: 2020-07-12
 title: "Converting Loops into Recursive functions"
-author: "Andrew Weiss"
+author: "Jake Wilson"
+authorBio: "I Speak Code, love literature, read & binge thrillers, and seek adventures while following food,fashion,sports, and science."
 authorImage: ../../images/gatsby-astronaut.png
+subtitle: "Useful techniques and exercises for solidifying your understanding of recursion"
 featuredImage: ../../images/featured/recursion.jpg
 tags: ["JavaScript", "Advanced JS", "Recursion"]
 ---
