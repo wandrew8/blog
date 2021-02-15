@@ -57,7 +57,7 @@ export const pageQuery = graphql`
 const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 2rem;
+    grid-gap: 0rem;
     margin: 3rem 1rem;
     justify-content: center;
     max-width: 1000px;

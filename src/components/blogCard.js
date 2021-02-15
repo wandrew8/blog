@@ -9,7 +9,7 @@ const BlogCard = ({ post }) => {
     const { excerpt } = post
     const featuredImage = post.frontmatter.featuredImage.childImageSharp.fluid;
     const authorImage = post.frontmatter.authorImage.childImageSharp.fluid;
-    const { path, date, title, author } = post.frontmatter
+    const { path, date, title, author, subtitle } = post.frontmatter
     return (
         <Card>
             <Link to={path}>
@@ -20,8 +20,8 @@ const BlogCard = ({ post }) => {
                             <p>{author} · {date}</p>
                         </div>
                         <h1>{title}</h1>
-                        <p>{truncate(excerpt, {
-                            'length': 70,
+                        <p>{truncate(subtitle, {
+                            'length': 35,
                             'seperator': " "}
                         )}</p>
                     </div>
@@ -35,25 +35,18 @@ const BlogCard = ({ post }) => {
 export default BlogCard
 
 const Card = styled.div`
-    border-radius: 10px;
-    width: 300px;
+    max-width: 550px;
+    min-width: 300px;
+    width: auto;
     margin: 0 auto;
-    @media ${devices.mobileL} { 
-        width: 350px;
-    }
-    @media ${devices.tablet} {
-        width: 300px;
-    }
-    @media ${devices.laptop} { 
-        width: 400px;
-    }
+    margin-bottom: 0.5rem;
     .flexbox {
         display: grid;
-        grid-template-columns: 1fr 100px;
+        grid-template-columns: 1fr 89px;
         grid-gap: 1rem;
         .image {
-            height: 100px;
-            width: 100px;
+            height: 89px;
+            width: 89px;
         }
     }
     a {
@@ -70,8 +63,8 @@ const Card = styled.div`
     p {
         margin: 8px 0px;
         padding: 0;
-        font-size: 10px;
-        line-height: 10px;
+        font-size: 12px;
+        line-height: 18px;
     }
     h2 {
         font-size: 11px;

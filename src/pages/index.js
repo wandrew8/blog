@@ -17,15 +17,15 @@ const IndexPage = ({ data }) => {
       <Layout>
         <Container>
           <Headliner data={headliner}/>
-          <div>
+          <div className="otherArticles">
             {otherArticles.map((article, i) => {
               return <BlogCard key={i} post={article.node} />
             })}
           </div>
-          <div>
-            <h2>Latest From Following</h2>
+          <div className="popAuthors">
+            <h2>Authors on the rise</h2>
           </div>
-          <div>
+          <div className="popTags">
             <h2>Topics to Follow</h2>
           </div>
         </Container>
@@ -35,15 +35,35 @@ const IndexPage = ({ data }) => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 1rem;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1200px;
+  justify-content: center;
+  padding: 0rem 0.5rem;
+  margin: 3rem auto;
   @media ${devices.tablet} { 
-    grid-template-columns: repeat(2, 1fr);
+    padding: 0rem 2rem;
   }
   @media ${devices.laptop} { 
     grid-template-columns: repeat(3, 1fr);
+  }
+  .otherArticles {
+    padding-bottom: 0rem;
+    border-bottom: 1px solid lightgray;
+  }
+  .popAuthors {
+    max-width: 350px;
+    min-width: 300px;
+    width: auto;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
+  }
+  .popTags {
+    max-width: 350px;
+    min-width: 300px;
+    width: auto;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid lightgray;
   }
 `;
 
@@ -61,6 +81,7 @@ export const pageQuery = graphql`
             date(formatString: "MMM DD")
             path
             author
+            subtitle
             authorImage {
               childImageSharp {
                 fluid(maxWidth: 100) {
