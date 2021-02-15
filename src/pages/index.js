@@ -1,16 +1,17 @@
 import React from "react"
 import { Link } from "gatsby"
 import Layout from "../components/layout"
-import TopArticles from '../components/topArticles'
 import useMediaQuery from '../hooks/mediaQuery'
 import styled from 'styled-components'
 import Headliner from '../components/headliner'
 import { devices } from '../styles/devices'
 import BlogCard from '../components/blogCard'
+import TopTags from '../components/topTags'
 
 const IndexPage = ({ data }) => {
-  const topArticles = data.allMarkdownRemark.edges.filter((item, i) => i < 5);
-  let isPageWide = useMediaQuery(devices.tablet);
+  const topArticles = data.tagsGroup.edges.filter((item, i) => i < 5);
+  const tags = data.tagsGroup.group;
+  let isPageWide = useMediaQuery(devices.laptop);
   const headliner = topArticles[0].node;
   const otherArticles = topArticles.slice(1);
   return (
@@ -22,12 +23,20 @@ const IndexPage = ({ data }) => {
               return <BlogCard key={i} post={article.node} />
             })}
           </div>
-          <div className="popAuthors">
-            <h2>Authors on the rise</h2>
+          { isPageWide ? 
+          <div>
+            <div className="popAuthors">
+              <h2>Authors on the rise</h2>
+            </div>
+            <TopTags tags={tags} />
           </div>
-          <div className="popTags">
-            <h2>Topics to Follow</h2>
-          </div>
+          : <>
+              <div className="popAuthors">
+                <h2>Authors on the rise</h2>
+              </div>
+              <TopTags tags={tags} />
+            </>
+            }
         </Container>
       </Layout>
     )
@@ -35,17 +44,21 @@ const IndexPage = ({ data }) => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+  grid-gap: 1.5rem;
   max-width: 1200px;
   justify-content: center;
   padding: 0rem 0.5rem;
   margin: 3rem auto;
+  @media ${devices.mobileL} { 
+    padding: 0rem 1rem;
+  }
   @media ${devices.tablet} { 
     padding: 0rem 2rem;
   }
   @media ${devices.laptop} { 
     grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
   }
   .otherArticles {
     padding-bottom: 0rem;
@@ -57,13 +70,10 @@ const Container = styled.div`
     width: auto;
     padding-bottom: 1rem;
     border-bottom: 1px solid lightgray;
-  }
-  .popTags {
-    max-width: 350px;
-    min-width: 300px;
-    width: auto;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid lightgray;
+    h2 {
+      padding: 0;
+      margin: 0;
+    }
   }
 `;
 
@@ -71,27 +81,31 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexQuery {
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    tagsGroup: allMarkdownRemark(limit: 2000) {
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
+      }
       edges {
         node {
-          excerpt(pruneLength: 250)
-          id
           frontmatter {
-            title
-            date(formatString: "MMM DD")
-            path
             author
-            subtitle
-            authorImage {
+            authorBio
+            date(formatString: "MMM DD")
+            featuredImage {
               childImageSharp {
                 fluid(maxWidth: 100) {
                   ...GatsbyImageSharpFluid
                 }
               }
             }
-            featuredImage {
+            path
+            subtitle
+            tags
+            title
+            authorImage {
               childImageSharp {
-                fluid(maxWidth: 500) {
+                fluid(maxWidth: 100) {
                   ...GatsbyImageSharpFluid
                 }
               }
@@ -100,6 +114,7 @@ export const pageQuery = graphql`
         }
       }
     }
-  }
+  } 
+  
 `
 
