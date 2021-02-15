@@ -1,5 +1,4 @@
 import React from "react"
-import { Helmet } from "react-helmet"
 import { graphql } from "gatsby"
 import styled from "styled-components"
 import AuthorAside from '../components/authorAside'
@@ -7,7 +6,6 @@ import { devices } from '../styles/devices'
 import useMediaQuery from '../hooks/mediaQuery'
 import Layout from '../components/layout'
 import Img from "gatsby-image"
-
 
 export default function Template({ data }) {
   const { markdownRemark: post } = data

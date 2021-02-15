@@ -3,6 +3,7 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { truncate } from 'lodash'
 import Img from "gatsby-image"
+import { devices } from '../styles/devices'
 
 const BlogCard = ({ post }) => {
     const { excerpt } = post
@@ -16,14 +17,13 @@ const BlogCard = ({ post }) => {
                     <div>
                         <div className="author">
                             <Img fluid={authorImage} alt={author} />
-                            <p>{author}</p>
+                            <p>{author} · {date}</p>
                         </div>
                         <h1>{title}</h1>
                         <p>{truncate(excerpt, {
                             'length': 70,
                             'seperator': " "}
                         )}</p>
-                        <h2>{date}</h2>
                     </div>
                     <Img className="image" fluid={featuredImage} alt={title} />
                 </div>
@@ -36,10 +36,21 @@ export default BlogCard
 
 const Card = styled.div`
     border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    @media ${devices.mobileL} { 
+        width: 350px;
+    }
+    @media ${devices.tablet} {
+        width: 300px;
+    }
+    @media ${devices.laptop} { 
+        width: 400px;
+    }
     .flexbox {
         display: grid;
         grid-template-columns: 1fr 100px;
-        grid-gap: 0.5rem;
+        grid-gap: 1rem;
         .image {
             height: 100px;
             width: 100px;
@@ -52,6 +63,7 @@ const Card = styled.div`
     }
     h1 {
         font-size: 16px;
+        line-height: 20px;
         margin: 0rem;
         padding: 0;
     }
@@ -81,7 +93,7 @@ const Card = styled.div`
             object-fit: cover;
         }
         p {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 400;
             line-height: 16px;
             padding: 0;

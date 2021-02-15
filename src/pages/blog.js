@@ -22,7 +22,7 @@ export default function Index({ data }) {
   )
 }
 export const pageQuery = graphql`
-  query IndexQuery {
+  query BlogQuery {
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
@@ -30,7 +30,7 @@ export const pageQuery = graphql`
           id
           frontmatter {
             title
-            date(formatString: "MMM DD, YYYY")
+            date(formatString: "MMM DD")
             path
             author
             authorImage {
@@ -58,15 +58,17 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 2rem;
-    margin: 2rem;
+    margin: 3rem 1rem;
     justify-content: center;
     max-width: 1000px;
     @media ${devices.mobileL} { 
+      margin: 2rem;
+    }
+    @media ${devices.tablet} { 
       margin: 4rem;
       grid-template-columns: repeat(2, 1fr);
     }
     @media ${devices.laptop} { 
-        margin: 4rem;
-        grid-template-columns: repeat(3, 1fr);
+        margin: 4rem auto;
     }
 `;

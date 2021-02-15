@@ -24,11 +24,12 @@ const AuthorAside = ({ mobile, author, date, authorImage, authorBio }) => {
                 <Img className="image" fluid={authorImage} alt={author}/>
                 <div>
                     <h3>{author} · <span className="date">{date}</span></h3>
-                    
-                    { isToggled ? <p className="content">{truncate(authorBio, {
-                        'length': 40,
-                        'seperator': " "
-                    })}</p> : <p>{authorBio}</p> }
+                    <a onClick={setToggle}>
+                        { isToggled ? <p className="content">{truncate(authorBio, {
+                            'length': 40,
+                            'seperator': " "
+                        })}</p> : <p>{authorBio}</p> }
+                    </a>
                 </div>
             </div>
             <div className="button">
