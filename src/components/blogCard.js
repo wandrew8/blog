@@ -38,7 +38,6 @@ const Card = styled.div`
     max-width: 550px;
     min-width: 300px;
     width: auto;
-    margin: 0 auto;
     margin-bottom: 0.5rem;
     .flexbox {
         display: grid;

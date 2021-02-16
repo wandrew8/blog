@@ -2,7 +2,7 @@
 path: "/blog/closures"
 date: 2021-05-12
 title: "Closures in JavaScript"
-author: "Andrew Weiss"
+author: "Bebe Weiss"
 authorBio: "Software engineering manager NY Times, dad, husband, former startup founder, TaeKwonDo black belt, cook, news & tech junkie. Here are some of my mind ramblings."
 subtitle: "A useful tool in advanced JavaScript"
 authorImage: ../../images/authors/jake.jpg

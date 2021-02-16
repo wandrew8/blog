@@ -7,6 +7,7 @@ import Headliner from '../components/headliner'
 import { devices } from '../styles/devices'
 import BlogCard from '../components/blogCard'
 import TopTags from '../components/topTags'
+import TopAuthors from '../components/topAuthors'
 
 const IndexPage = ({ data }) => {
   const topArticles = data.tagsGroup.edges.filter((item, i) => i < 5);
@@ -24,17 +25,13 @@ const IndexPage = ({ data }) => {
             })}
           </div>
           { isPageWide ? 
-          <div>
-            <div className="popAuthors">
-              <h2>Authors on the rise</h2>
-            </div>
-            <TopTags tags={tags} />
+          <div className="desktop">
+            <TopAuthors limit={4} data={data.authorGroup}/>
+            <TopTags tags={tags} limit={3}/>
           </div>
           : <>
-              <div className="popAuthors">
-                <h2>Authors on the rise</h2>
-              </div>
-              <TopTags tags={tags} />
+              <TopAuthors limit={8} data={data.authorGroup}/>
+              <TopTags tags={tags} limit={4}/>
             </>
             }
         </Container>
@@ -44,7 +41,7 @@ const IndexPage = ({ data }) => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(325px, 550px));
   grid-gap: 1.5rem;
   max-width: 1200px;
   justify-content: center;
@@ -55,6 +52,8 @@ const Container = styled.div`
   }
   @media ${devices.tablet} { 
     padding: 0rem 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(325px, 330px));
+
   }
   @media ${devices.laptop} { 
     grid-template-columns: repeat(3, 1fr);
@@ -64,23 +63,35 @@ const Container = styled.div`
     padding-bottom: 0rem;
     border-bottom: 1px solid lightgray;
   }
-  .popAuthors {
-    max-width: 350px;
-    min-width: 300px;
-    width: auto;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid lightgray;
-    h2 {
-      padding: 0;
-      margin: 0;
-    }
+  .desktop {
+    border-left: solid 1px lightgray;
+    padding-left: 1rem;
   }
+  
 `;
 
 export default IndexPage
 
 export const pageQuery = graphql`
   query IndexQuery {
+    authorGroup: allMarkdownRemark(limit: 2000, sort: {fields: frontmatter___author, order: ASC}) {
+      group(field: frontmatter___author, limit: 5) {
+          totalCount
+          fieldValue
+          nodes {
+              frontmatter {
+                  authorBio
+                  authorImage {
+                      childImageSharp {
+                          fluid {
+                              ...GatsbyImageSharpFluid
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  }
     tagsGroup: allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue

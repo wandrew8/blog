@@ -13,6 +13,7 @@ const Headliner = ({ data }) => {
     return (
         <Container>
             <Link to={path}>
+                <h2 className="title">New Stories</h2>
                 <Img className="image" fluid={featuredImage} alt={title} />
                 <div className="author">
                     <Img fluid={authorImage} alt={author} />
@@ -33,11 +34,14 @@ const Container = styled.div`
     max-width: 550px;
     min-width: 300px;
     width: auto;
-    margin: 0 auto;
     padding-bottom: 1rem;
     border-bottom: 1px solid lightgray;
+    .title {
+        font-size: 24px;
+        color: black;
+    }
     .image {
-        height: 275px;
+        height: 270px;
         width: 100%;
         margin-bottom: 1rem;
     }
