@@ -143,9 +143,6 @@ const MobileContainer = styled.div`
 `
 const PageContainer = styled.div`
   margin: 3rem 1rem;
-  @media ${devices.mobileL} { 
-    margin: 4rem;
-  }
   @media ${devices.tablet} { 
     margin: 6rem 4rem;
   }
