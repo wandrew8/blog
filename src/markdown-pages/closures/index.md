@@ -8,6 +8,7 @@ subtitle: "A useful tool in advanced JavaScript"
 authorImage: ../../images/authors/jake.jpg
 featuredImage: ../../images/featured/closure.jpg
 tags: ["JavaScript", "Advanced JS", "Closures"]
+category: "Programming"
 ---
 
 As the title states, JavaScript closures have always been a bit of a mystery to me. I have read multiple articles, I have used closures in my work, sometimes I even used a closure without realizing I was using a closure.
