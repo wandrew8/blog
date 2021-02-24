@@ -3,7 +3,6 @@ import { Link } from 'gatsby'
 import styled from 'styled-components'
 import { truncate } from 'lodash'
 import Img from "gatsby-image"
-import { devices } from '../styles/devices'
 
 const BlogCard = ({ post }) => {
     const { excerpt } = post

@@ -30,6 +30,8 @@ const TagTemplate = ({ data }) => {
 export default TagTemplate;
 
 const Grid = styled.div`
+    max-width: 1000px;
+    margin: 0 auto;
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 450px));
