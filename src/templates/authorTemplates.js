@@ -6,12 +6,23 @@ import { devices } from '../styles/devices'
 import useMediaQuery from '../hooks/mediaQuery'
 import Layout from '../components/layout'
 import Img from "gatsby-image"
+import BlogCard from '../components/blogCard'
 
 export default function Template({ data }) {
-  console.log(data)
+  const authorInfo = data.allMarkdownRemark.edges[0].node.frontmatter;
+  const { authorBio, author } = authorInfo;
+  const authorImage = authorInfo.authorImage.childImageSharp.fluid;
+  const blogPosts = data.allMarkdownRemark.edges;
   return (
     <Layout>
         <h1>Authors</h1>
+        <h2>{author}</h2>
+        <p>{authorBio}</p>
+        {blogPosts.map(post => {
+            return (
+                <BlogCard post={post.node} key={post.title} />
+            )
+        })}
     </Layout>
   )
 }
