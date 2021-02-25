@@ -3,6 +3,7 @@ const _ = require("lodash")
 
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions
+  const authorTemplate = path.resolve(`src/templates/authorTemplates.js`)
   const tagTemplate = path.resolve(`src/templates/tagTemplate.js`)
   const blogPostTemplate = path.resolve(`src/templates/blogTemplate.js`)
   const result = await graphql(`
@@ -21,6 +22,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       }
       tagsGroup: allMarkdownRemark(limit: 2000) {
         group(field: frontmatter___tags) {
+          fieldValue
+        }
+      }
+      authorGroup: allMarkdownRemark(limit: 2000) {
+        group(field: frontmatter___author) {
           fieldValue
         }
       }
@@ -47,6 +53,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       component: tagTemplate,
       context: {
         tag: tag.fieldValue
+      }
+    })
+  })
+
+  const authors = result.data.authorGroup.group;
+  authors.forEach(author => {
+    createPage({
+      path: `/author/${_.kebabCase(author.fieldValue)}`,
+      component: authorTemplate,
+      context: {
+        author: author.fieldValue
       }
     })
   })
