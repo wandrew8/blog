@@ -8,8 +8,10 @@ import { devices } from '../styles/devices'
 import BlogCard from '../components/blogCard'
 import TopTags from '../components/topTags'
 import TopAuthors from '../components/topAuthors'
+import NewsFeed from '../components/newsFeed'
 
 const IndexPage = ({ data }) => {
+  const { edges: posts } = data.allMarkdownRemark
   const topArticles = data.tagsGroup.edges.filter((item, i) => i < 5);
   const tags = data.tagsGroup.group;
   let isPageWide = useMediaQuery(devices.laptop);
@@ -35,6 +37,7 @@ const IndexPage = ({ data }) => {
             </>
             }
         </Container>
+        <NewsFeed posts={posts}/>
       </Layout>
     )
 }
@@ -74,6 +77,36 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query IndexQuery {
+    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+      edges {
+        node {
+          excerpt(pruneLength: 500)
+          id
+          frontmatter {
+            title
+            date(formatString: "MMMM DD, YYYY")
+            path
+            author
+            authorBio
+            authorImage {
+              childImageSharp {
+                fluid(maxWidth: 100) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            featuredImage {
+              childImageSharp {
+                fluid(maxWidth: 500) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  
     authorGroup: allMarkdownRemark(limit: 2000, sort: {fields: frontmatter___author, order: ASC}) {
       group(field: frontmatter___author, limit: 5) {
           totalCount

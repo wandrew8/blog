@@ -16,7 +16,6 @@ export default function Template({ data }) {
   const blogPosts = data.allMarkdownRemark.edges;
   return (
     <Layout>
-        <h1>Authors</h1>
         { !isPageWide ? 
         <MobileContainer>  
           <div className="blog-post">
@@ -86,6 +85,7 @@ const Container = styled.div`
   grid-template-columns: 1fr;
   grid-gap: 0rem 2rem;
   position: relative;
+  padding: 5rem 0rem;
   h1 {
     font-size: 2rem;
     line-height: 2.5rem;
