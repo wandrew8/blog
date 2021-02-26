@@ -6,9 +6,10 @@ import { devices } from '../styles/devices'
 import useMediaQuery from '../hooks/mediaQuery'
 import Layout from '../components/layout'
 import Img from "gatsby-image"
-import BlogCard from '../components/blogCard'
+import LongBlogCard from '../components/longBlogCard'
 
 export default function Template({ data }) {
+  let isPageWide = useMediaQuery(devices.tablet);
   const authorInfo = data.allMarkdownRemark.edges[0].node.frontmatter;
   const { authorBio, author } = authorInfo;
   const authorImage = authorInfo.authorImage.childImageSharp.fluid;
@@ -16,13 +17,27 @@ export default function Template({ data }) {
   return (
     <Layout>
         <h1>Authors</h1>
-        <h2>{author}</h2>
-        <p>{authorBio}</p>
-        {blogPosts.map(post => {
-            return (
-                <BlogCard post={post.node} key={post.title} />
-            )
-        })}
+        { !isPageWide ? 
+        <MobileContainer>  
+          <div className="blog-post">
+            <AuthorAside mobile={isPageWide} authorBio={authorBio} author={author} authorImage={authorImage}/> 
+            {blogPosts.map(post => {
+                return (
+                    <LongBlogCard post={post.node} key={post.node.frontmatter.title} />
+                )
+            })}
+          </div>
+        </MobileContainer> :
+        <Container>
+          <AuthorAside mobile={isPageWide} authorBio={authorBio} author={author} authorImage={authorImage}/> 
+          <div className="blog-post"> 
+            {blogPosts.map(post => {
+                return (
+                    <LongBlogCard post={post.node} key={post.node.frontmatter.title} />
+                )
+            })}
+          </div>
+        </Container> }
     </Layout>
   )
 }
@@ -32,10 +47,12 @@ query ($author: String) {
     allMarkdownRemark(limit: 2000, sort: {fields: [frontmatter___date], order: DESC}, filter: {frontmatter: {author: {in: [$author]}}}) {
       edges {
         node {
+            html
+            excerpt(pruneLength: 1000)
             frontmatter {
                 author
                 authorBio
-                date(formatString: "MMM DD")
+                date(formatString: "MMMM DD, YYYY")
                 featuredImage {
                   childImageSharp {
                     fluid(maxWidth: 500) {

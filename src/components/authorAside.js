@@ -6,7 +6,7 @@ import { truncate } from 'lodash'
 import useToggle from '../hooks/useToggle'
 
 
-const AuthorAside = ({ mobile, author, date, authorImage, authorBio }) => {
+const AuthorAside = ({ mobile, author, authorImage, authorBio }) => {
     const [isToggled, setToggle] = useToggle(true);
     return (
       <>
@@ -23,7 +23,7 @@ const AuthorAside = ({ mobile, author, date, authorImage, authorBio }) => {
             <div className="flex">
                 <Img className="image" fluid={authorImage} alt={author}/>
                 <div>
-                    <h3>{author} · <span className="date">{date}</span></h3>
+                    <h3>{author}</h3>
                     <a onClick={setToggle}>
                         { isToggled ? <p className="content">{truncate(authorBio, {
                             'length': 40,

@@ -20,7 +20,7 @@ export default function Template({ data }) {
             <h1>{title}</h1>
             <h2>{subtitle}</h2>
           <div className="blog-post">
-          <AuthorAside date={date} mobile={isPageWide} authorBio={authorBio} author={author} authorImage={authorImage}/> 
+          <AuthorAside mobile={isPageWide} authorBio={authorBio} author={author} authorImage={authorImage}/> 
             <Img className="blogImage" fluid={featuredImage} alt={title} />
             <div
               className="blog-post-content"
