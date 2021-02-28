@@ -3,11 +3,14 @@ import { Link, graphql } from "gatsby"
 import kebabCase from "lodash/kebabCase"
 import Layout from '../components/layout'
 import styled from "styled-components"
-import { categorieImages } from '../images/categories'
+import placeholder from '../images/featured/recursion.jpg'
+import Img from 'gatsby-image'
 import { devices } from '../styles/devices';
 
 const TagsPage = ({data}) => {
     const categories = data.categoryGroup.group
+    const images = data.allImageSharp.edges;
+    console.log(images)
     return (
         <Layout>
             <CategoryCard>
@@ -22,6 +25,8 @@ const TagsPage = ({data}) => {
                         </div>
                         <ul>
                         { unique.map(single => {
+                            let tagImage = images.filter(image => image.node.fluid.originalName === `${kebabCase(single).toLowerCase()}.jpg` )[0]?.node?.fluid || placeholder;
+                            console.log(tagImage)
                             return (
                                 <li key={single} className="tags">
                                     <Link key={single} to={`/tags/${kebabCase(single)}/`}>
@@ -29,7 +34,7 @@ const TagsPage = ({data}) => {
                                             <div className="cardHeading">
                                                 <h3>{single}</h3>
                                             </div>
-                                            <img className="image" src={categorieImages[single.toLowerCase()]} alt={single} />
+                                            <Img className="image" fluid={tagImage} alt={single} />
                                         </div>
                                     </Link>
                                 </li>
@@ -131,6 +136,16 @@ query {
                       title
                       tags
                       category
+                    }
+                }
+            }
+        }
+        allImageSharp {
+            edges {
+                node {
+                    fluid (maxWidth: 500) {
+                        ...GatsbyImageSharpFluid
+                        
                     }
                 }
             }

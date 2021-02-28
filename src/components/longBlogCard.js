@@ -53,13 +53,6 @@ const Container = styled.div`
     grid-template-columns: 300px 1fr;
     grid-gap: 2rem;
     margin: 0 auto;
-    padding: 0rem 0.5rem;
-    @media ${devices.mobileL} { 
-    padding: 0rem 1rem;
-    }
-    @media ${devices.tablet} { 
-        padding: 0rem 2rem;
-
     }
     @media ${devices.laptop} { 
         grid-gap: 2rem;
